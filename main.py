@@ -10,12 +10,12 @@ from speed_and_distance_estimator import SpeedAndDistance_Estimator
 import numpy as np
 import argparse
 
-def main(inp_f_path, sport, model_path):
+def main(inp_f_path, sport, model_path, ball_track_model=None, shot_sel_model=None):
     # inp_f_path = "input_video/hockey.mp4"
     video_frames = read_video(inp_f_path)
 
     if sport == "hockey":    
-        hock_model = "models/hockey.pt"
+        hock_model = model_path
         tracker_stubs = "stubs/track_stubs.pkl"
         cam_mov_stubs = "stubs/camera_movement_stub.pkl"
 
@@ -71,7 +71,7 @@ def main(inp_f_path, sport, model_path):
         save_video(output_video_frames, 'output_videos/output_video.avi')
     
     elif sport == "volleyball":
-        volley_model = "models/volley.pt"
+        volley_model = model_path
         volley_stubs = "stubs/rack_stubs.pkl"
         cam_mov_stubs = "stubs/camera_movement_stub.pkl"
 
@@ -131,25 +131,23 @@ def main(inp_f_path, sport, model_path):
         save_video(output_video_frames, 'output_videos/output_video.avi')
     
     else:
-        crick_model = "models/all.pt"
-        balltr_model = "models/balltrack.pt"
-        shotsel_model = "models/shotsel.pt"
+        crick_model = model_path
 
         player_track = CricketTracker(model_path=crick_model)
         player_detections = player_track.detect_frames(video_frames)
-
-        ball_track = BallTracker(model_path=balltr_model)
-        ball_detections = ball_track.detect_frames(video_frames)
-
-        shot_detect = ShotDetector(model_path=shotsel_model)
-        shot_detections = shot_detect.detect_frames(video_frames)
-
         output_video_frames = player_track.draw_bboxes(video_frames, player_detections)
-        output_video_frames = ball_track.draw_bboxes(output_video_frames, ball_detections)
-        output_video_frames = shot_detect.draw_bboxes(output_video_frames, shot_detections)
+        
+        if ball_track_model:
+            ball_track = BallTracker(model_path=ball_track_model)
+            ball_detections = ball_track.detect_frames(video_frames)
+            output_video_frames = ball_track.draw_bboxes(output_video_frames, ball_detections)
+
+        if shot_sel_model:
+            shot_detect = ShotDetector(model_path=shot_sel_model)
+            shot_detections = shot_detect.detect_frames(video_frames)
+            output_video_frames = shot_detect.draw_bboxes(output_video_frames, shot_detections)
 
         save_video(output_video_frames, "output/tracking.avi")
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get task args')
@@ -158,7 +156,9 @@ if __name__ == '__main__':
     parser.add_argument('--sport', help='Type of Sport', default="hockey")
     parser.add_argument('--inp_f_path', help='Input File Path')
     parser.add_argument('--model_path', help='Model Path')
+    parser.add_argument('--ball_track_model', help='Ball Track Model Path', default=None)
+    parser.add_argument('--shot_sel_model', help='Shot Sel Model Path', default=None)
 
     args = parser.parse_args()
 
-    main(inp_f_path=args.inp_f_path, sport=args.sport, model_path=args.model_path)
+    main(inp_f_path=args.inp_f_path, sport=args.sport, model_path=args.model_path, ball_track_model=args.ball_track_model, shot_sel_model=args.shot_sel_model)
