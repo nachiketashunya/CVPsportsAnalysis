@@ -68,7 +68,7 @@ def main(inp_f_path, sport, model_path, ball_track_model=None, shot_sel_model=No
         output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames, camera_movement_per_frame)
 
         # Save video
-        save_video(output_video_frames, 'output_videos/output_video.avi')
+        save_video(output_video_frames, 'output/output_hockey.avi')
     
     elif sport == "volleyball":
         volley_model = model_path
@@ -128,7 +128,7 @@ def main(inp_f_path, sport, model_path, ball_track_model=None, shot_sel_model=No
 
         output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames,camera_movement_per_frame)
 
-        save_video(output_video_frames, 'output_videos/output_video.avi')
+        save_video(output_video_frames, 'output/output_volleyball.avi')
     
     else:
         crick_model = model_path
@@ -147,7 +147,7 @@ def main(inp_f_path, sport, model_path, ball_track_model=None, shot_sel_model=No
             shot_detections = shot_detect.detect_frames(video_frames)
             output_video_frames = shot_detect.draw_bboxes(output_video_frames, shot_detections)
 
-        save_video(output_video_frames, "output/tracking.avi")
+        save_video(output_video_frames, "output/output_cricket.avi")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get task args')
