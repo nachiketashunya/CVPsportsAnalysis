@@ -1,4 +1,5 @@
 import cv2
+import os
 
 def read_video(video_path):
     cap = cv2.VideoCapture(video_path)
