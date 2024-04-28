@@ -1,4 +1,3 @@
-sys
 opencv-python
 numpy
 matplotlib
@@ -6,5 +5,4 @@ scikit-learn
 pandas
 ultralytics
 supervision
-argparse
 pickle
