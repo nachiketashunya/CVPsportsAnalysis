@@ -12,14 +12,15 @@ Welcome to our Sports Analysis Repository, where we leverage cutting-edge Comput
 4. **Perform Video Inference:** Utilize inference tool by executing the following command in your terminal:
 
     ```bash
-    python main.py --sport=hockey --model_path=model_path --inp_f_path=input_file_path
+    python main.py --sport=sport_type --model_path=model_path --inp_f_path=input_file_path
     ```
 
     Replace `hockey` with your desired sport and provide the appropriate paths for `model_path` and `input_file_path`.
+
+   **Supported Sports:**'hockey', 'volleyball', 'cricket'
 
 ### For Cricket:
 *For cricket video inference, append these extra arguments to your command:*
 
 ```bash
 --ball_track_model
---shot_sel_model
