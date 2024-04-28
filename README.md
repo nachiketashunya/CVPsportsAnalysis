@@ -2,12 +2,14 @@ Welcome to our Sports Analysis Repository, where we leverage cutting-edge Comput
 
 1. **Download Models:** Obtain the necessary models for your specific sports analysis task from our [Model Repository](https://drive.google.com/drive/folders/1aL6ymtOGY3wFMvfnOFR2U5879onsMd1y?usp=sharing).
 
-2. **Requirements:** Install necessary dependencies
+2. **Download Input Videos(Optional):**: Download input videos from this [link](https://drive.google.com/drive/folders/1VxnGADPKjf8Y6eEEw4FxUGwChvtNUW1s?usp=sharing)
+
+3. **Requirements:** Install necessary dependencies
     ```bash
     pip install -r requirements.txt
     ``` 
 
-2. **Perform Video Inference:** Utilize inference tool by executing the following command in your terminal:
+4. **Perform Video Inference:** Utilize inference tool by executing the following command in your terminal:
 
     ```bash
     python main.py --sport=hockey --model_path=model_path --inp_f_path=input_file_path
